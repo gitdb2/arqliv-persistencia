@@ -32,6 +32,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<dependencies>
 	
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.0.3.RELEASE</version>
+		</dependency>
+	
+		<dependency>
             <groupId>uy.edu.ort.arqliv.obligatorio</groupId>
  			<artifactId>dominio</artifactId>
  			<version>0.0.1</version>

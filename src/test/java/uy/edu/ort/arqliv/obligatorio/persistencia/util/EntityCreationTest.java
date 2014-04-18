@@ -1,16 +1,29 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.util;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
+import uy.edu.ort.arqliv.obligatorio.persistencia.bo.ContainerBo;
 
 public class EntityCreationTest {
 
 	@Test
-	public void CreateArrival() {
+	public void CreateShip() {
+		ApplicationContext appContext = new ClassPathXmlApplicationContext("resources/spring/config/beanlocations.xml");
+    	ContainerBo cBo = (ContainerBo) appContext.getBean("containerBo");
+    	Container c = new Container();
+    	c.setBrand("AAA");
+    	c.setCapacity(1000);
+    	c.setCode(111);
+    	c.setModel("Modeloooo");
+    	cBo.save(c);
+	}
+	
+	/*
+	@Test
+	public void CreateContainer() {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
 		Session session = sessionFactory.openSession();
@@ -27,5 +40,6 @@ public class EntityCreationTest {
 		transaction.commit();
 		session.close();
 	}
+	*/
 
 }
