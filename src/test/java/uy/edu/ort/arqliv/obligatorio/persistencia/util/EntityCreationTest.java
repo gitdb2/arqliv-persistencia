@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 
-public class EntityCreation {
+public class EntityCreationTest {
 
 	@Test
 	public void CreateArrival() {
