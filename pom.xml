@@ -31,15 +31,17 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	
 	<dependencies>
 	
-	    <!-- tag::joda[] -->
-  
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.2</version>
+		<dependency>
+            <groupId>uy.edu.ort.arqliv.obligatorio</groupId>
+ 			<artifactId>dominio</artifactId>
+ 			<version>0.0.1</version>
         </dependency>
-  
-    <!-- end::joda[] -->
+        
+        <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.30</version>
+		</dependency>
 	
 		<!-- Spring and Transactions -->
 		<dependency>

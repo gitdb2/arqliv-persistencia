@@ -1,6 +1,5 @@
 package hello;
 
-import org.joda.time.LocalTime;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -19,6 +18,7 @@ public class HelloWorld {
 	    // Do something with this beanFactory object.
 	}
 	
+	/*
 	 public static void main(String[] args) {
 			LocalTime currentTime = new LocalTime();
 			System.out.println("The current local time is: " + currentTime);
@@ -27,4 +27,5 @@ public class HelloWorld {
 			
 			beanFactoryAwareTest();
 		}
+		*/
 }
