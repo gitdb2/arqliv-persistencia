@@ -1,6 +1,6 @@
 package com.techcielo.spring4.service;
 
-import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,22 +10,51 @@ import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 import com.techcielo.spring4.dao.ShipDAO;
 
 @Service("shipSvc")
-public class ShipService {
+public class ShipService implements IEntityService<Ship, Long>{
 
 	@Autowired
-	private ShipDAO shipDAO;
+	private ShipDAO dao;
 
 	public void setShipDAO(ShipDAO shipDAO) {
-		this.shipDAO = shipDAO;
+		this.dao = shipDAO;
 	}
 
-	public Ship getShip(long id) {
-		System.out.println("In Service class...will call DAO");
-		return shipDAO.get(id);
+	@Override
+	public Ship get(Long id) {
+		
+		return dao.get(id);
 	}
 
-	public Serializable save(Ship ship) {
-		return shipDAO.save(ship);
+	@Override
+	public List<Ship> getAll() {
+		
+		return dao.getAll();
 	}
+
+	@Override
+	public Long save(Ship o) {
+		return dao.save(o);
+	}
+
+	@Override
+	public void update(Ship o) {
+		dao.update(o);
+
+	}
+
+	@Override
+	public void delete(Ship o) {
+		dao.delete(o);
+
+	}
+
+//	public Ship getShip(long id) {
+//		System.out.println("In Service class...will call DAO");
+//		return shipDAO.get(id);
+//	}
+//
+//	public Serializable save(Ship ship) {
+//		return shipDAO.save(ship);
+//	}
 
 }

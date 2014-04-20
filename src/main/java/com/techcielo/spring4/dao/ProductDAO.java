@@ -10,7 +10,7 @@ import com.techcielo.spring4.bean.Product;
 public class ProductDAO extends BaseDAO<Product, Integer> {
 
 
-	public Product getProduct(int id) {
+	public Product get(int id) {
 		System.out.println("In DAO class");
 		try {
 			return  super.get(id);
