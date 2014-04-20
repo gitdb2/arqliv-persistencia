@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.springframework.org/schema/beans    
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+   
+      <!-- This sescion tells Spring context where to look for bean classes with appropriate annotations -->
+      <context:component-scan base-package="com.techcielo.spring4"></context:component-scan>
+
+      <!-- Configure JDBC Connection-->
+      <bean id="dataSource"
+            class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+            <property name="url" value="jdbc:mysql://localhost:3306/arqliv" />
+            <property name="username" value="root" />
+            <property name="password" value="root" />
+      </bean>
+
+      <!-- Configure Hibernate 4 Session Facotry -->
+      <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+            <property name="dataSource">
+                  <ref bean="dataSource" />
+            </property>
+
+            <property name="hibernateProperties">
+                  <props>
+                        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                        <prop key="hibernate.show_sql">true</prop>
+                        <prop key="hibernate.hbm2ddl.auto">update</prop>
+                  </props>
+            </property>
+            
+            <property name="packagesToScan" value="com.techcielo.spring4.bean.**"/>
+		</bean>
+      
+</beans>
