@@ -1,5 +1,7 @@
 package com.techcielo.spring4.service;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +21,9 @@ public class ProductService {
        public Product getProduct(int id){
               System.out.println("In Service class...will call DAO");
               return prodDAO.getProduct(id);
+       }
+       
+       public Serializable save(Product product){
+           return  prodDAO.save(product);
        }
 }

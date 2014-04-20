@@ -35,7 +35,13 @@
                   </props>
             </property>
             
-            <property name="packagesToScan" value="com.techcielo.spring4.bean.**"/>
+            <property name="packagesToScan">
+            <list>
+              <value>uy.edu.ort.arqliv.obligatorio.dominio.**</value>
+              <value>com.techcielo.spring4.bean.**</value>
+            </list>
+           
+             </property>
 		</bean>
       
 </beans>
