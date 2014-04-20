@@ -3,11 +3,12 @@ package com.techcielo.spring4.dao;
 import java.io.Serializable;
 
 import org.hibernate.HibernateException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 
-@Service("shipDAO")
+@Component("shipDAO")
 // This the id by which it will be auto wired
 public class ShipDAO extends BaseDAO {
 
