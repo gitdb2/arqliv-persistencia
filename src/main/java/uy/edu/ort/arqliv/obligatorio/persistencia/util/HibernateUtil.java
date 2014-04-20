@@ -1,23 +1,27 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.util;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
 	
-	 private static final SessionFactory sessionFactory;
+	 private static SessionFactory sessionFactory;
+	 private static ServiceRegistry serviceRegistry;
+
+	 private static SessionFactory createSessionFactory() {
+	    Configuration configuration = new Configuration();
+	    configuration.configure();
+	    serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+	    sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+	    return sessionFactory;
+	 }
 	    
-	    static {
-	        try {
-	            sessionFactory = new Configuration().configure().buildSessionFactory();
-	        } catch (Throwable ex) {
-	            System.err.println("Initial SessionFactory creation failed." + ex);
-	            throw new ExceptionInInitializerError(ex);
-	        }
-	    }
-	    
-	    public static SessionFactory getSessionFactory() {
-	        return sessionFactory;
-	    }
+	 public static SessionFactory getSessionFactory() {
+		 if (sessionFactory == null)
+			 createSessionFactory();
+        return sessionFactory;
+	 }
 
 }
