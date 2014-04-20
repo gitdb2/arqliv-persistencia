@@ -2,6 +2,7 @@ package com.techcielo.spring4.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public interface IEntityService<T, PK extends Serializable> {
 
@@ -15,6 +16,8 @@ public interface IEntityService<T, PK extends Serializable> {
 	public void update(T o);
 
 	public void delete(T o);
+	
+	public Object executeNamedQuery(String nameQuery, Map<String, Object> params);
 
 	
 }

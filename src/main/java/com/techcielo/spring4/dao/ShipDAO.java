@@ -1,6 +1,5 @@
 package com.techcielo.spring4.dao;
 
-import org.hibernate.HibernateException;
 import org.springframework.stereotype.Component;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;

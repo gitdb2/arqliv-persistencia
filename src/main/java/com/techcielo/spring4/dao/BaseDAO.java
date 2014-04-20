@@ -3,10 +3,12 @@ package com.techcielo.spring4.dao;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -53,4 +55,15 @@ public abstract class BaseDAO<T, PK extends Serializable> {
 		final Criteria crit = getSession().createCriteria(this.type);
 		return crit.list();
 	}
+	
+	
+
+	public Object executeNamedQuery(String nameQuery, Map<String, Object> params) {
+		Query query = getSession().getNamedQuery(nameQuery);
+		for (String key : params.keySet()) {
+			query.setParameter(key, params.get(key));
+		}
+		return query.list();
+	}
+	
 }
