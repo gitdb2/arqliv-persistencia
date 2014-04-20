@@ -21,7 +21,7 @@ public class ShipService {
 
 	public Ship getShip(long id) {
 		System.out.println("In Service class...will call DAO");
-		return shipDAO.getShip(id);
+		return shipDAO.get(id);
 	}
 
 	public Serializable save(Ship ship) {

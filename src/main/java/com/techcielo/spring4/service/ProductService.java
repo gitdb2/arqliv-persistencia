@@ -20,7 +20,7 @@ public class ProductService {
       
        public Product getProduct(int id){
               System.out.println("In Service class...will call DAO");
-              return prodDAO.getProduct(id);
+              return prodDAO.get(id);
        }
        
        public Serializable save(Product product){
