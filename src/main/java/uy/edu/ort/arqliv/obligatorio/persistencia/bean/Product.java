@@ -1,4 +1,4 @@
-package com.techcielo.spring4.bean;
+package uy.edu.ort.arqliv.obligatorio.persistencia.bean;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

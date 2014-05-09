@@ -1,4 +1,4 @@
-package com.techcielo.spring4.service;
+package uy.edu.ort.arqliv.obligatorio.persistencia.service;
 
 import java.util.List;
 
@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
-
-import com.techcielo.spring4.dao.ShipDAO;
+import uy.edu.ort.arqliv.obligatorio.persistencia.dao.ShipDAO;
 
 @Service("shipSvc")
 public class ShipService implements IEntityService<Ship, Long>{
@@ -21,13 +20,11 @@ public class ShipService implements IEntityService<Ship, Long>{
 
 	@Override
 	public Ship get(Long id) {
-		
 		return dao.get(id);
 	}
 
 	@Override
 	public List<Ship> getAll() {
-		
 		return dao.getAll();
 	}
 
@@ -39,22 +36,11 @@ public class ShipService implements IEntityService<Ship, Long>{
 	@Override
 	public void update(Ship o) {
 		dao.update(o);
-
 	}
 
 	@Override
 	public void delete(Ship o) {
 		dao.delete(o);
-
 	}
-
-//	public Ship getShip(long id) {
-//		System.out.println("In Service class...will call DAO");
-//		return shipDAO.get(id);
-//	}
-//
-//	public Serializable save(Ship ship) {
-//		return shipDAO.save(ship);
-//	}
 
 }

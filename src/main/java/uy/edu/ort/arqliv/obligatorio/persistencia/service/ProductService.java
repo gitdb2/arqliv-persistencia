@@ -1,12 +1,12 @@
-package com.techcielo.spring4.service;
+package uy.edu.ort.arqliv.obligatorio.persistencia.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.techcielo.spring4.bean.Product;
-import com.techcielo.spring4.dao.ProductDAO;
+import uy.edu.ort.arqliv.obligatorio.persistencia.bean.Product;
+import uy.edu.ort.arqliv.obligatorio.persistencia.dao.ProductDAO;
 
 @Service("prodSvc")
 public class ProductService implements IEntityService<Product, Integer> {
@@ -20,13 +20,11 @@ public class ProductService implements IEntityService<Product, Integer> {
 
 	@Override
 	public Product get(Integer id) {
-		
 		return dao.get(id);
 	}
 
 	@Override
 	public List<Product> getAll() {
-		
 		return dao.getAll();
 	}
 
@@ -38,13 +36,11 @@ public class ProductService implements IEntityService<Product, Integer> {
 	@Override
 	public void update(Product o) {
 		dao.update(o);
-
 	}
 
 	@Override
 	public void delete(Product o) {
 		dao.delete(o);
-
 	}
 
 }

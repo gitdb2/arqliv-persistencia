@@ -1,4 +1,4 @@
-package com.techcielo.spring4.dao;
+package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
 
 public abstract class BaseDAO<T, PK extends Serializable> {
 
@@ -32,25 +33,31 @@ public abstract class BaseDAO<T, PK extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public PK save(T o) {
 		return (PK) getSession().save(o);
 	}
 
+	@Transactional
 	public void update(T o) {
 		getSession().update(o);
 	}
 
+	@Transactional
 	public void delete(T o) {
 		getSession().delete(o);
 	}
 
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public T get(PK id) {
 		return (T) getSession().get(type, id);
 	}
+	
 	@SuppressWarnings("unchecked")
 	public List<T> getAll() {
 		final Criteria crit = getSession().createCriteria(this.type);
 		return crit.list();
 	}
+	
 }

@@ -8,8 +8,8 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
    
-      <!-- This sescion tells Spring context where to look for bean classes with appropriate annotations -->
-      <context:component-scan base-package="com.techcielo.spring4"></context:component-scan>
+      <!-- This seccion tells Spring context where to look for bean classes with appropriate annotations -->
+      <context:component-scan base-package="uy.edu.ort.arqliv.obligatorio"></context:component-scan>
 
       <!-- Configure JDBC Connection-->
       <bean id="dataSource"
@@ -38,10 +38,11 @@
             <property name="packagesToScan">
             <list>
               <value>uy.edu.ort.arqliv.obligatorio.dominio.**</value>
-              <value>com.techcielo.spring4.bean.**</value>
+              <value>uy.edu.ort.arqliv.obligatorio.persistencia.service.**</value>
+              <value>uy.edu.ort.arqliv.obligatorio.persistencia.dao.**</value>
+              <value>uy.edu.ort.arqliv.obligatorio.persistencia.bean.**</value>
             </list>
-           
-             </property>
+            </property>
 		</bean>
       
 </beans>
