@@ -62,6 +62,10 @@ public abstract class BaseDAO<T, PK extends Serializable> {
 		return crit.list();
 	}
 	
+<<<<<<< HEAD:src/main/java/uy/edu/ort/arqliv/obligatorio/persistencia/dao/BaseDAO.java
+=======
+	
+
 	public Object executeNamedQuery(String nameQuery, Map<String, Object> params) {
 		Query query = getSession().getNamedQuery(nameQuery);
 		for (String key : params.keySet()) {
@@ -70,4 +74,5 @@ public abstract class BaseDAO<T, PK extends Serializable> {
 		return query.list();
 	}
 	
+>>>>>>> a1640491e375cde67b8072f3934a299402457234:src/main/java/com/techcielo/spring4/dao/BaseDAO.java
 }

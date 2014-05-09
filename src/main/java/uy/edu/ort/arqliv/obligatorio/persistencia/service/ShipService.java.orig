@@ -44,10 +44,14 @@ public class ShipService implements IEntityService<Ship, Long>{
 		dao.delete(o);
 	}
 
+<<<<<<< HEAD:src/main/java/uy/edu/ort/arqliv/obligatorio/persistencia/service/ShipService.java
+=======
 	@Override
 	public Object executeNamedQuery(String nameQuery, Map<String, Object> params) {
 //		Query query = dao.executeNamedQuery("findStockByStockCode", new ObjArray()[], new type);
 		return dao.executeNamedQuery(nameQuery, params);
 	}
 
+
+>>>>>>> a1640491e375cde67b8072f3934a299402457234:src/main/java/com/techcielo/spring4/service/ShipService.java
 }

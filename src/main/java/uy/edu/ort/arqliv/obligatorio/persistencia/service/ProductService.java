@@ -1,6 +1,7 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,12 @@ public class ProductService implements IEntityService<Product, Integer> {
 	public void delete(Product o) {
 		dao.delete(o);
 	}
+
+	@Override
+	public Object executeNamedQuery(String nameQuery, Map<String, Object> params) {
+		return dao.executeNamedQuery(nameQuery, params);
+	}
+	
+	
 
 }
