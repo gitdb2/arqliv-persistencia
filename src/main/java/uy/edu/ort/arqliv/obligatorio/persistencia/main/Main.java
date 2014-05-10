@@ -1,5 +1,9 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.main;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -17,8 +21,28 @@ public class Main {
 		Ship ship = new Ship(2.0, 523, 55, "UY", 1978, "deli");
 
 		//save
-		System.out.println("-----------------------------");
-		shipDAO.store(ship);
-		System.out.println("-----------------------------");
+		Long id = shipDAO.store(ship);
+		
+		Ship ship2 = shipDAO.findById(id);
+		ship2.setFlag("BR");
+		ship2.setName("nuevoNombre");
+		shipDAO.store(ship2);
+		
+		shipDAO.delete(ship2.getJpaid());
+		
+		List<Ship> todos = shipDAO.findAll();
+		
+		for (Ship s : todos) {
+			System.out.println(s.toString());
+		}
+		
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("flag", "BR");
+		List<Ship> byNamedQuery = shipDAO.executeNamedQuery("Ship.findByFlag", parameters);
+		
+		for (Ship s : byNamedQuery) {
+			System.out.println(s.toString());
+		}
+
 	}
 }
