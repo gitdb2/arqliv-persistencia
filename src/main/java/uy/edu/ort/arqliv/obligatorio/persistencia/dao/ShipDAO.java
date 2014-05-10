@@ -2,60 +2,51 @@ package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.springframework.stereotype.Component;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
+
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 
-@Component("shipDAO")
-public class ShipDAO extends BaseDAO<Ship, Long> {
+@Repository("shipDAO")
+public class ShipDAO implements IShipDAO {
 
-	public Ship getShip(long id) {
-		try {
-			return super.get(id);
-		} catch (HibernateException e) {
-			//TODO loguear
-			System.out.println("Error en get ship");
-		}
-		return null;
+	@PersistenceUnit
+    private EntityManagerFactory entityManagerFactory;
+    
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Transactional
+	@Override
+	public void store(Ship obj) {
+    	entityManager.merge(obj);
 	}
 
-	public Long save(Ship ship) {
-		try {
-			return super.save(ship);
-		} catch (HibernateException e) {
-			//TODO loguear
-			System.out.println("Error en save ship");
-		}
-		return null;
+    @Transactional
+	@Override
+	public void delete(Long id) {
+    	Ship obj = entityManager.find(Ship.class, id);
+		entityManager.remove(obj);
 	}
-	
-	public void update(Ship ship) {
-		try {
-			super.update(ship);
-		} catch (HibernateException e) {
-			//TODO loguear
-			System.out.println("Error en update ship");
-		}
+
+    @Transactional(readOnly = true)
+	@Override
+	public Ship findById(Long id) {
+    	return entityManager.find(Ship.class, id);
 	}
-	
-	public void delete(Ship ship) {
-		try {
-			super.delete(ship);
-		} catch (HibernateException e) {
-			//TODO loguear
-			System.out.println("Error en delete ship");
-		}
-	}
-	
-	public List<Ship> getAll() {
-		try {
-			return super.getAll();
-		} catch (HibernateException e) {
-			//TODO loguear
-			System.out.println("Error en getAll ship");
-		}
-		return null;
+
+    @SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<Ship> findAll() {
+    	  Query query = entityManager.createQuery("from Test");
+          return (List<Ship>) query.getResultList();
 	}
 
 }
