@@ -12,9 +12,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
+import uy.edu.ort.arqliv.obligatorio.dominio.User;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IArrivalDAO;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IContainerDAO;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IShipDAO;
+import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IUserDAO;
 
 public class Main {
 
@@ -22,7 +24,7 @@ public class Main {
 		testShip();
 		testContainer();
 		testArrival();
-		//testUser();
+		testUser();
 	}
 
 	private static void testShip() {
@@ -168,35 +170,29 @@ public class Main {
 		
 		System.out.println("------------------------------");
 
-		IShipDAO shipDAO = (IShipDAO) ctx.getBean("shipDAO");
-		
-		Ship ship = new Ship(2.0, 523, 55, "UY", 1978, "deli");
+		IUserDAO userDAO = (IUserDAO) ctx.getBean("userDAO");
 
-		//save
-		Long id = shipDAO.store(ship);
+		User user = new User();
+		user.setName("Cacho");
+		Long id = userDAO.store(user);
 		
-		Ship ship2 = shipDAO.findById(id);
-		ship2.setFlag("BR");
-		ship2.setName("nuevoNombre");
-		shipDAO.store(ship2);
+		User user2 = userDAO.findById(id);
 		
-		//shipDAO.delete(ship2.getId());
+		System.out.println(user2.toString());
 		
-		List<Ship> todos = shipDAO.findAll();
+		user2.setName("Roberto");
+		id = userDAO.store(user2);
 		
-		for (Ship s : todos) {
-			System.out.println(s.toString());
+		User user3 = userDAO.findById(id);
+		System.out.println(user3.toString());
+		
+		List<User> todos = userDAO.findAll();
+		for (User user4 : todos) {
+			System.out.println(user4.toString());
 		}
 		
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("flag", "BR");
-		List<Ship> byNamedQuery = shipDAO.executeNamedQuery("Ship.findByFlag", parameters);
+		userDAO.delete(id);
 		
-		for (Ship s : byNamedQuery) {
-			System.out.println(s.toString());
-		}
-		
-		System.out.println("------------------------------");
 	}
 	
 }

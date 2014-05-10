@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.User;
 
-@Repository("UserDAO")
+@Repository("userDAO")
 public class UserDAO implements IUserDAO {
 
 	@PersistenceUnit
