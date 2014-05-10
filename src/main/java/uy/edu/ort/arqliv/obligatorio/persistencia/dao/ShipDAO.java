@@ -32,7 +32,7 @@ public class ShipDAO implements IShipDAO {
 	@Override
 	public Long store(Ship obj) {
     	Ship stored = entityManager.merge(obj);
-    	return stored.getJpaid();
+    	return stored.getId();
 	}
 
     @Transactional

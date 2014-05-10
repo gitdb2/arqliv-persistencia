@@ -28,7 +28,7 @@ public class Main {
 		ship2.setName("nuevoNombre");
 		shipDAO.store(ship2);
 		
-		shipDAO.delete(ship2.getJpaid());
+		//shipDAO.delete(ship2.getId());
 		
 		List<Ship> todos = shipDAO.findAll();
 		
