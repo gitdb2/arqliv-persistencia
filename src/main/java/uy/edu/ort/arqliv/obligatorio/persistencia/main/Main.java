@@ -13,7 +13,7 @@ public class Main {
 		// Build application context by reading spring-config.xml
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "spring-config.xml" });
 
-		IShipDAO shipDAO = (ShipDAO) ctx.getBean("shipDAO");
+		IShipDAO shipDAO = (IShipDAO) ctx.getBean("shipDAO");
 		
 		Ship ship = new Ship(2.0, 523, 55, "UY", 1978, "deli");
 
