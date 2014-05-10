@@ -15,6 +15,8 @@ public class Main {
 	public static void main(String[] args) {
 		// Build application context by reading spring-config.xml
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "spring-config.xml" });
+		
+		System.out.println("------------------------------");
 
 		IShipDAO shipDAO = (IShipDAO) ctx.getBean("shipDAO");
 		
@@ -43,6 +45,6 @@ public class Main {
 		for (Ship s : byNamedQuery) {
 			System.out.println(s.toString());
 		}
-
+		System.out.println("------------------------------");
 	}
 }
