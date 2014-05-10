@@ -5,7 +5,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IShipDAO;
-import uy.edu.ort.arqliv.obligatorio.persistencia.dao.ShipDAO;
 
 public class Main {
 
@@ -18,6 +17,8 @@ public class Main {
 		Ship ship = new Ship(2.0, 523, 55, "UY", 1978, "deli");
 
 		//save
+		System.out.println("-----------------------------");
 		shipDAO.store(ship);
+		System.out.println("-----------------------------");
 	}
 }

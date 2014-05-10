@@ -11,12 +11,22 @@
           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 ">
 
-	<context:component-scan base-package="uy.edu.ort.arqliv.obligatorio" />
+	<!-- This seccion tells Spring context where to look for bean classes with 
+		appropriate annotations -->
+		
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<context:component-scan base-package="uy.edu.ort.arqliv.obligatorio"/>
 
 	<context:annotation-config />
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
 
-	<tx:annotation-driven />
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
+	<!-- Configure JDBC Connection -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -27,7 +37,6 @@
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="persistanceUnit" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
@@ -38,15 +47,4 @@
 		</property>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-
-
 </beans>
-
-
-
