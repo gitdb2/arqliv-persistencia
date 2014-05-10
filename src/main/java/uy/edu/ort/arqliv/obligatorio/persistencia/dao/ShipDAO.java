@@ -1,12 +1,18 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +30,9 @@ public class ShipDAO implements IShipDAO {
 
     @Transactional
 	@Override
-	public void store(Ship obj) {
-    	entityManager.merge(obj);
+	public Long store(Ship obj) {
+    	Ship stored = entityManager.merge(obj);
+    	return stored.getJpaid();
 	}
 
     @Transactional
@@ -41,12 +48,30 @@ public class ShipDAO implements IShipDAO {
     	return entityManager.find(Ship.class, id);
 	}
 
-    @SuppressWarnings("unchecked")
-	@Transactional
+    @Transactional
 	@Override
 	public List<Ship> findAll() {
-    	  Query query = entityManager.createQuery("from Test");
-          return (List<Ship>) query.getResultList();
+    	CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Ship> cq = cb.createQuery(Ship.class);
+        Root<Ship> rootEntry = cq.from(Ship.class);
+        CriteriaQuery<Ship> all = cq.select(rootEntry);
+        TypedQuery<Ship> allQuery = entityManager.createQuery(all);
+        return allQuery.getResultList();
 	}
+    
+    @Transactional
+    public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
+    	TypedQuery<Ship> query = entityManager.createNamedQuery(namedQuery, Ship.class);
+    	setParameters(query, parameters);
+    	return query.getResultList();
+    }
+    
+	private void setParameters(TypedQuery<Ship> query, Map<String, String> parameters) {
+		Iterator<Entry<String, String>> it = parameters.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+			query.setParameter(pairs.getKey(), pairs.getValue());
+		}
+    }
 
 }
