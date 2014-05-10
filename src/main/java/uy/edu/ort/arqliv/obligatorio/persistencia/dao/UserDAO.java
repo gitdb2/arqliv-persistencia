@@ -15,10 +15,10 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
+import uy.edu.ort.arqliv.obligatorio.dominio.User;
 
-@Repository("shipDAO")
-public class ShipDAO implements IShipDAO {
+@Repository("UserDAO")
+public class UserDAO implements IUserDAO {
 
 	@PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
@@ -28,38 +28,38 @@ public class ShipDAO implements IShipDAO {
 
     @Transactional
 	@Override
-	public Long store(Ship obj) {
-    	Ship stored = entityManager.merge(obj);
+	public Long store(User obj) {
+    	User stored = entityManager.merge(obj);
     	return stored.getId();
 	}
 
     @Transactional
 	@Override
 	public void delete(Long id) {
-    	Ship obj = entityManager.find(Ship.class, id);
+    	User obj = entityManager.find(User.class, id);
 		entityManager.remove(obj);
 	}
 
     @Transactional(readOnly = true)
 	@Override
-	public Ship findById(Long id) {
-    	return entityManager.find(Ship.class, id);
+	public User findById(Long id) {
+    	return entityManager.find(User.class, id);
 	}
 
     @Transactional
 	@Override
-	public List<Ship> findAll() {
+	public List<User> findAll() {
     	CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Ship> cq = cb.createQuery(Ship.class);
-        Root<Ship> rootEntry = cq.from(Ship.class);
-        CriteriaQuery<Ship> all = cq.select(rootEntry);
-        TypedQuery<Ship> allQuery = entityManager.createQuery(all);
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> rootEntry = cq.from(User.class);
+        CriteriaQuery<User> all = cq.select(rootEntry);
+        TypedQuery<User> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
 	}
     
     @Transactional
-    public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
-    	TypedQuery<Ship> query = entityManager.createNamedQuery(namedQuery, Ship.class);
+    public List<User> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
+    	TypedQuery<User> query = entityManager.createNamedQuery(namedQuery, User.class);
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();
     }
