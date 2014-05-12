@@ -22,9 +22,9 @@ public class Main {
 
 	public static void main(String[] args) {
 		testShip();
-		testContainer();
-		testArrival();
-		testUser();
+		//testContainer();
+		//testArrival();
+		//testUser();
 	}
 
 	private static void testShip() {
