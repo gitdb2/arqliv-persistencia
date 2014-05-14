@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,11 +36,21 @@ public class ShipDAO implements IShipDAO {
 
     @Transactional
 	@Override
-	public void delete(Long id) {
-    	Ship obj = entityManager.find(Ship.class, id);
-		entityManager.remove(obj);
+	public boolean delete(Long id) {
+    	
+    	Query query = entityManager.createNamedQuery("Ship.countUsage", Long.class);
+    	query.setParameter("id", id);
+    	
+    	Long countInUse = (Long) query.getSingleResult();
+    	if(countInUse != null && countInUse == 0){
+    		Ship obj = entityManager.find(Ship.class, id);
+    		entityManager.remove(obj);
+    		return true;
+    	}
+    	return false;	
 	}
-
+    
+   
     @Transactional(readOnly = true)
 	@Override
 	public Ship findById(Long id) {
