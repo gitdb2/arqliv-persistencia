@@ -20,5 +20,5 @@ public interface IUsageAuditDAO {
 	public Pair<String, Long> minServiceTime(Date dateFilter);
 	
 	public Pair<String, Long> maxServiceTime(Date dateFilter);
-	
+
 }

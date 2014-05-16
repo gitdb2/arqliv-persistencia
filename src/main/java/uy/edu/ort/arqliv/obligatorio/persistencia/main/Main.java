@@ -33,6 +33,7 @@ public class Main {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "spring-config.xml" });
 		IUsageAuditDAO dao = (IUsageAuditDAO) ctx.getBean("usageAuditDAO");
 		
+		//List<Pair<String, Double>> avgs = dao.avgServiceTime(new Date());
 		List<Pair<String, Double>> avgs = dao.avgServiceTime(new Date());
 		for (Pair<String, Double> par : avgs) {
 			System.out.println("servicio: " + par.getKey() + " avgTime: " + par.getValue());

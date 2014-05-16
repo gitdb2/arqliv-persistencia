@@ -1,6 +1,5 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -55,70 +54,29 @@ public class UsageAuditDAO implements IUsageAuditDAO {
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();
 	}
-
-	@Override
+    
 	@SuppressWarnings("unchecked")
+	@Override
 	public List<Pair<String, Double>> avgServiceTime(Date dateFilter) {
-		String queryStr = "SELECT u.service, AVG(UNIX_TIMESTAMP(u.actionEndTime) - UNIX_TIMESTAMP(u.actionStartTime)) AS avgTime"
-					   + " FROM UsageAudit u "
-					   + " WHERE DATE(u.actionStartTime) = DATE(:dateFilter) "
-					   + " GROUP BY u.service "
-					   + " ORDER BY avgTime ASC";
-		Query query = entityManager.createQuery(queryStr);
+		Query query = entityManager.createNamedQuery("UsageAudit.avgServiceTime", Pair.class); 
 		query.setParameter("dateFilter", dateFilter);
-		return parsePerformanceQueryList(query.getResultList());
+		return query.getResultList();
 	}
-
-	@Override
+	
 	@SuppressWarnings("unchecked")
+	@Override
 	public Pair<String, Long> minServiceTime(Date dateFilter) {
-		String queryStr = "	SELECT u.service, UNIX_TIMESTAMP(u.actionEndTime) - UNIX_TIMESTAMP(u.actionStartTime) AS minTime "
-			+ " FROM UsageAudit u"
-			+ " WHERE DATE(u.actionStartTime) = DATE(:dateFilter) "
-			+ " AND UNIX_TIMESTAMP(u.actionEndTime) - UNIX_TIMESTAMP(u.actionStartTime) "
-			+ " = (SELECT MIN(UNIX_TIMESTAMP(p.actionEndTime) - UNIX_TIMESTAMP(p.actionStartTime)) "
-			+ "    FROM UsageAudit p WHERE DATE(p.actionStartTime) = DATE(:dateFilter))";
-
-		Query query = entityManager.createQuery(queryStr);
+		Query query = entityManager.createNamedQuery("UsageAudit.minServiceTime", Pair.class); 
 		query.setParameter("dateFilter", dateFilter);
-		return parsePerformanceQueryUniqueValue(query.getResultList());
+		return (Pair<String, Long>)query.getSingleResult();
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	@SuppressWarnings("unchecked")
 	public Pair<String, Long> maxServiceTime(Date dateFilter) {
-		String queryStr = "	SELECT u.service, UNIX_TIMESTAMP(u.actionEndTime) - UNIX_TIMESTAMP(u.actionStartTime) AS minTime "
-				+ " FROM UsageAudit u"
-				+ " WHERE DATE(u.actionStartTime) = DATE(:dateFilter) "
-				+ " AND UNIX_TIMESTAMP(u.actionEndTime) - UNIX_TIMESTAMP(u.actionStartTime) "
-				+ " = (SELECT MAX(UNIX_TIMESTAMP(p.actionEndTime) - UNIX_TIMESTAMP(p.actionStartTime)) "
-				+ "    FROM UsageAudit p WHERE DATE(p.actionStartTime) = DATE(:dateFilter))";
-		
-		Query query = entityManager.createQuery(queryStr);
+		Query query = entityManager.createNamedQuery("UsageAudit.maxServiceTime", Pair.class); 
 		query.setParameter("dateFilter", dateFilter);
-		return parsePerformanceQueryUniqueValue(query.getResultList());
-	}
-	
-	@SuppressWarnings("unchecked")
-	private <K, V> List <Pair <K, V>> parsePerformanceQueryList (List<Object[]> rawResult) {
-		List <Pair <K, V>> ret = new ArrayList<Pair <K, V>>();
-		Pair<K, V> tmp = new Pair<K, V>();
-		for (Object[] resultElement : rawResult) {
-			tmp = new Pair<K, V>();
-	        tmp.setKey((K) resultElement[0]);
-	        tmp.setValue((V) resultElement[1]);
-	        ret.add(tmp);
-	    }
-		return ret;
-	}
-	
-	private <K, V> Pair<K, V> parsePerformanceQueryUniqueValue (List<Object[]> rawResult) {
-		List <Pair <K, V>> tmp = parsePerformanceQueryList(rawResult);
-		if (tmp.isEmpty()) {
-			return null;
-		} else {
-			return tmp.get(0);
-		}
+		return (Pair<String, Long>)query.getSingleResult();
 	}
 	
 }
