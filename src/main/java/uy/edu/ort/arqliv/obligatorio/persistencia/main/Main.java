@@ -11,18 +11,45 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
 import uy.edu.ort.arqliv.obligatorio.dominio.Container;
+import uy.edu.ort.arqliv.obligatorio.dominio.Pair;
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IArrivalDAO;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IContainerDAO;
 import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IShipDAO;
+import uy.edu.ort.arqliv.obligatorio.persistencia.dao.IUsageAuditDAO;
 
 public class Main {
 
 	public static void main(String[] args) {
-		testShip();
+		//testShip();
 		//testContainer();
 		//testArrival();
 		//testUser();
+		testUsageAudit();
+	}
+
+	private static void testUsageAudit() {
+		System.out.println("------------------------------");
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "spring-config.xml" });
+		IUsageAuditDAO dao = (IUsageAuditDAO) ctx.getBean("usageAuditDAO");
+		
+		//List<Pair<String, Double>> avgs = dao.avgServiceTime(new Date());
+		List<Pair<String, Double>> avgs = dao.avgServiceTime(new Date());
+		for (Pair<String, Double> par : avgs) {
+			System.out.println("servicio: " + par.getKey() + " avgTime: " + par.getValue());
+		}
+		
+		System.out.println("*******************************");
+		
+		Pair<String, Long> min = dao.minServiceTime(new Date());
+		System.out.println("servicio: " + min.getKey() + " minTime: " + min.getValue());
+		
+		System.out.println("*******************************");
+		
+		Pair<String, Long> max = dao.maxServiceTime(new Date());
+		System.out.println("servicio: " + max.getKey() + " maxTime: " + max.getValue());
+		
+		System.out.println("------------------------------");
 	}
 
 	private static void testShip() {
@@ -162,35 +189,5 @@ public class Main {
 		
 		System.out.println("------------------------------");
 	}
-	
-//	private static void testUser() {
-//		ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[] { "spring-config.xml" });
-//		
-//		System.out.println("------------------------------");
-//
-//		IUserDAO userDAO = (IUserDAO) ctx.getBean("userDAO");
-//
-//		User user = new User();
-//		user.setName("Cacho");
-//		Long id = userDAO.store(user);
-//		
-//		User user2 = userDAO.findById(id);
-//		
-//		System.out.println(user2.toString());
-//		
-//		user2.setName("Roberto");
-//		id = userDAO.store(user2);
-//		
-//		User user3 = userDAO.findById(id);
-//		System.out.println(user3.toString());
-//		
-//		List<User> todos = userDAO.findAll();
-//		for (User user4 : todos) {
-//			System.out.println(user4.toString());
-//		}
-//		
-//		userDAO.delete(id);
-//		
-//	}
 	
 }

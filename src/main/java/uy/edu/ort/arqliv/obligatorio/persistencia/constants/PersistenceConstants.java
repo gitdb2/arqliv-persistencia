@@ -5,5 +5,6 @@ public interface PersistenceConstants {
 	public String ShipDao = "shipDAO";
 	public String ContainerDao = "containerDAO";
 	public String ArrivalDao = "arrivalDAO";
+	public String UsageAuditDao = "usageAuditDAO";
 	
 }
