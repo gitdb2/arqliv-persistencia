@@ -55,7 +55,7 @@ public class UsageAuditDAO implements IUsageAuditDAO {
     	return query.getResultList();
 	}
     
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
 	@Override
 	public List<Pair<String, Double>> avgServiceTime(Date dateFilter) {
 		Query query = entityManager.createNamedQuery("UsageAudit.avgServiceTime", Pair.class); 
@@ -65,18 +65,18 @@ public class UsageAuditDAO implements IUsageAuditDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Pair<String, Long> minServiceTime(Date dateFilter) {
+	public List<Pair<String, Long>> minServiceTime(Date dateFilter) {
 		Query query = entityManager.createNamedQuery("UsageAudit.minServiceTime", Pair.class); 
 		query.setParameter("dateFilter", dateFilter);
-		return (Pair<String, Long>)query.getSingleResult();
+		return query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Pair<String, Long> maxServiceTime(Date dateFilter) {
+	public List<Pair<String, Long>> maxServiceTime(Date dateFilter) {
 		Query query = entityManager.createNamedQuery("UsageAudit.maxServiceTime", Pair.class); 
 		query.setParameter("dateFilter", dateFilter);
-		return (Pair<String, Long>)query.getSingleResult();
+		return query.getResultList();
 	}
 	
 }

@@ -17,8 +17,8 @@ public interface IUsageAuditDAO {
 	
 	public List<Pair<String, Double>> avgServiceTime(Date dateFilter);
 	
-	public Pair<String, Long> minServiceTime(Date dateFilter);
+	public List<Pair<String, Long>> minServiceTime(Date dateFilter);
 	
-	public Pair<String, Long> maxServiceTime(Date dateFilter);
-
+	public List<Pair<String, Long>> maxServiceTime(Date dateFilter);
+	
 }
