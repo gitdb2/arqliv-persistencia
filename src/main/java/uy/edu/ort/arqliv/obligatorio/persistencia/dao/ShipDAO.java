@@ -1,5 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +68,18 @@ public class ShipDAO implements IShipDAO {
         TypedQuery<Ship> allQuery = entityManager.createQuery(all);
         return allQuery.getResultList();
 	}
+    
+    
+    @Transactional
+ 	@Override
+ 	public boolean canBeUpdated(Long id, Date arrivalDate) {
+     	Query query = entityManager.createNamedQuery("Ship.canBeUpdated", Integer.class);
+    	query.setParameter("id", id);
+    	query.setParameter("arrivalDate", arrivalDate);
+     	Integer val =  (Integer) query.getSingleResult();
+     	return val == 1;
+ 	} 
+  
     
     @Transactional
     public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters) {

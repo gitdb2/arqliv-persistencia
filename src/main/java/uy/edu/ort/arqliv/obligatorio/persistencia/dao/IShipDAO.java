@@ -1,5 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,16 @@ public interface IShipDAO {
 	public List<Ship> findAll();
 	
 	public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters);
+	
+	/**
+	 * Retorna true si el barco cumple con la regla de negocios 3:
+	 * No se puede modificar la Capacidad de transporte de un Barco, si no arribo a puerto ese día.
+	 * Se debe controlar en el Negocio si se modificó el valor o no para invocar esta operacion.
+	 * @param id
+	 * @param arrivalDate
+	 * @return
+	 */
+	boolean canBeUpdated(Long id, Date arrivalDate);
 	
 	
 
