@@ -1,5 +1,7 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
+import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 
 @Repository("arrivalDAO")
 public class ArrivalDAO implements IArrivalDAO {
@@ -42,7 +46,6 @@ public class ArrivalDAO implements IArrivalDAO {
     	Arrival obj = entityManager.find(Arrival.class, id);
     	obj.setShip(null);
     	obj.setContainers(null);
-//    	entityManager.persist(obj);
     	
 		entityManager.remove(obj);
 		return true;
@@ -97,5 +100,31 @@ public class ArrivalDAO implements IArrivalDAO {
 		Arrival stored = entityManager.merge(obj);
     	return stored.getId();
 	}
-
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public List<Arrival> findArrivalUsingContainerForDate(Long containerId,
+			Date arrivalDate) {
+	
+    	TypedQuery<Arrival> query = entityManager.createNamedQuery(
+				"Arrival.findArrivalUsingContainerForDate", Arrival.class);
+		query.setParameter("id", containerId);
+		query.setParameter("arrivalDate", arrivalDate);	
+		
+		return query.getResultList();
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+   	@Override
+   	public List<Arrival> findArrivalUsingContainerListForDate(List<Container> containerList,
+   			Date arrivalDate) {
+   	
+       	TypedQuery<Arrival> query = entityManager.createNamedQuery(
+   				"Arrival.findArrivalUsingContainerListForDate", Arrival.class);
+   		query.setParameter("containerList", containerList);
+   		query.setParameter("arrivalDate", arrivalDate);	
+   		
+   		return query.getResultList();
+       }
+    
 }
