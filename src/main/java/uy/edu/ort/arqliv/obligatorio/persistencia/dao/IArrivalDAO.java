@@ -17,7 +17,7 @@ public interface IArrivalDAO {
 
 	public List<Arrival> findAll();
 	
-	public List<Arrival> executeNamedQuery(String namedQuery, Map<String, String> parameters);
+	public List<Arrival> executeNamedQuery(String namedQuery, Map<String, Object> parameters);
 	
 	public Arrival initializeAndUnproxy(Arrival obj);
 

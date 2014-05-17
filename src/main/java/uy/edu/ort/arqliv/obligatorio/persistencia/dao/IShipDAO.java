@@ -20,7 +20,7 @@ public interface IShipDAO {
 
 	public List<Ship> findAll();
 	
-	public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters);
+	public List<Ship> executeNamedQuery(String namedQuery, Map<String, Object> parameters);
 	
 	/**
 	 * Retorna true si el barco cumple con la regla de negocios 3:

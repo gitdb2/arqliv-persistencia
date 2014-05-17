@@ -77,7 +77,7 @@ public class Main {
 			System.out.println(s.toString());
 		}
 		
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("flag", "BR");
 		List<Ship> byNamedQuery = shipDAO.executeNamedQuery("Ship.findByFlag", parameters);
 		
@@ -120,7 +120,7 @@ public class Main {
 			System.out.println(c.toString());
 		}
 		
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("model", "DRY");
 		List<Container> namedQuery = containerDAO.executeNamedQuery("Container.findByModel", parameters);
 		

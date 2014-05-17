@@ -95,7 +95,7 @@ public class ContainerDAO implements IContainerDAO {
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public List<Container> executeNamedQuery(String namedQuery,
-			Map<String, String> parameters) {
+			Map<String, Object> parameters) {
 		TypedQuery<Container> query = entityManager.createNamedQuery(
 				namedQuery, Container.class);
 		UtilsDAO.setParameters(query, parameters);

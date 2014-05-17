@@ -49,7 +49,7 @@ public class UsageAuditDAO implements IUsageAuditDAO {
 
     @Transactional
 	@Override
-	public List<UsageAudit> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
+	public List<UsageAudit> executeNamedQuery(String namedQuery, Map<String, Object> parameters) {
     	TypedQuery<UsageAudit> query = entityManager.createNamedQuery(namedQuery, UsageAudit.class);
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();

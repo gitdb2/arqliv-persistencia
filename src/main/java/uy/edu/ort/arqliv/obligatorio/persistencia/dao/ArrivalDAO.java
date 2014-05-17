@@ -88,7 +88,7 @@ public class ArrivalDAO implements IArrivalDAO {
     
     @Override
     @Transactional(propagation=Propagation.REQUIRED)
-    public List<Arrival> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
+    public List<Arrival> executeNamedQuery(String namedQuery, Map<String, Object> parameters) {
     	TypedQuery<Arrival> query = entityManager.createNamedQuery(namedQuery, Arrival.class);
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();
@@ -129,16 +129,17 @@ public class ArrivalDAO implements IArrivalDAO {
 
 	@Override
 	public List<Arrival> arrivalsByMonth(int month) {
-		Map<String, String> params = new HashMap<String, String>(1);
-		params.put("month", Integer.toString(month));
-		return executeNamedQuery("Arrival.arrivalsByMonth", params);
+		Map<String, Object> params = new HashMap<String, Object>(1);
+		params.put("month", month);
+		List<Arrival> ret = executeNamedQuery("Arrival.arrivalsByMonth", params); 
+		return ret;
 	}
 
 	@Override
 	public List<Arrival> arrivalsByMonthByShip(int month, Long shipId) {
-		Map<String, String> params = new HashMap<String, String>(2);
-		params.put("month", Integer.toString(month));
-		params.put("shipId", Long.toString(shipId));
+		Map<String, Object> params = new HashMap<String, Object>(2);
+		params.put("month", month);
+		params.put("shipId", shipId);
 		return executeNamedQuery("Arrival.arrivalsByMonthByShip", params);
 	}
     

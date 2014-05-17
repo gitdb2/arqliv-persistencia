@@ -16,7 +16,7 @@ public interface IContainerDAO {
 
 	public List<Container> findAll();
 	
-	public List<Container> executeNamedQuery(String namedQuery, Map<String, String> parameters);
+	public List<Container> executeNamedQuery(String namedQuery, Map<String, Object> parameters);
 
 	/**
 	 * Actualiza un contenedor en la base de datos en caso que:

@@ -83,7 +83,7 @@ public class ShipDAO implements IShipDAO {
   
     
     @Transactional(propagation=Propagation.REQUIRED)
-    public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
+    public List<Ship> executeNamedQuery(String namedQuery, Map<String, Object> parameters) {
     	TypedQuery<Ship> query = entityManager.createNamedQuery(namedQuery, Ship.class);
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();

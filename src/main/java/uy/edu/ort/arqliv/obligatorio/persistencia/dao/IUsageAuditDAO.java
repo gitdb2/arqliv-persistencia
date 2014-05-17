@@ -13,7 +13,7 @@ public interface IUsageAuditDAO {
 
 	public List<UsageAudit> findAll();
 	
-	public List<UsageAudit> executeNamedQuery(String namedQuery, Map<String, String> parameters);
+	public List<UsageAudit> executeNamedQuery(String namedQuery, Map<String, Object> parameters);
 	
 	public List<Pair<String, Double>> avgServiceTime(Date dateFilter);
 	

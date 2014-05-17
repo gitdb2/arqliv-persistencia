@@ -9,10 +9,10 @@ import javax.persistence.TypedQuery;
 public class UtilsDAO {
 
 	@SuppressWarnings("rawtypes")
-	public static void setParameters(TypedQuery query, Map<String, String> parameters) {
-		Iterator<Entry<String, String>> it = parameters.entrySet().iterator();
+	public static void setParameters(TypedQuery query, Map<String, Object> parameters) {
+		Iterator<Entry<String, Object>> it = parameters.entrySet().iterator();
 		while (it.hasNext()) {
-			Map.Entry<String, String> pairs = (Map.Entry<String, String>) it.next();
+			Map.Entry<String, Object> pairs = (Map.Entry<String, Object>) it.next();
 			query.setParameter(pairs.getKey(), pairs.getValue());
 		}
     }
