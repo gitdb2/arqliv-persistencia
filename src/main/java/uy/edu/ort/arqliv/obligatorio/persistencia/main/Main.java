@@ -41,13 +41,13 @@ public class Main {
 		
 		System.out.println("*******************************");
 		
-		Pair<String, Long> min = dao.minServiceTime(new Date());
-		System.out.println("servicio: " + min.getKey() + " minTime: " + min.getValue());
-		
-		System.out.println("*******************************");
-		
-		Pair<String, Long> max = dao.maxServiceTime(new Date());
-		System.out.println("servicio: " + max.getKey() + " maxTime: " + max.getValue());
+//		Pair<String, Long> min = dao.minServiceTime(new Date());
+//		System.out.println("servicio: " + min.getKey() + " minTime: " + min.getValue());
+//		
+//		System.out.println("*******************************");
+//		
+//		Pair<String, Long> max = dao.maxServiceTime(new Date());
+//		System.out.println("servicio: " + max.getKey() + " maxTime: " + max.getValue());
 		
 		System.out.println("------------------------------");
 	}
