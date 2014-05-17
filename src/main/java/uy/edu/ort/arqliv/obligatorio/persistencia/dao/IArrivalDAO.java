@@ -9,7 +9,7 @@ public interface IArrivalDAO {
 
 	public Long store(Arrival obj);
 
-	public void delete(Long id);
+	public boolean delete(Long id);
 
 	public Arrival findById(Long id);
 
@@ -18,5 +18,7 @@ public interface IArrivalDAO {
 	public List<Arrival> executeNamedQuery(String namedQuery, Map<String, String> parameters);
 	
 	public Arrival initializeAndUnproxy(Arrival obj);
+
+	public Long update(Arrival arrival);
 
 }
