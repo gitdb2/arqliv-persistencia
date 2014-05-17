@@ -1,5 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,5 +26,13 @@ public interface IContainerDAO {
 	 * @return
 	 */
 	public Long update(Container obj);
+
+	/**
+	 * retorna true en caso que el contenedor este usado en otro arribo en la misma fecha
+	 * @param id
+	 * @param arrivalDate
+	 * @return
+	 */
+	boolean isContainerInUse(Long id, Date arrivalDate);
 
 }

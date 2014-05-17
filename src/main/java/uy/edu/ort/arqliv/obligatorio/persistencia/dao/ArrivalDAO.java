@@ -1,6 +1,8 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,9 +19,11 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Hibernate;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Arrival;
+import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 
 @Repository("arrivalDAO")
 public class ArrivalDAO implements IArrivalDAO {
@@ -29,27 +34,33 @@ public class ArrivalDAO implements IArrivalDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public Long store(Arrival obj) {
     	Arrival stored = entityManager.merge(obj);
     	return stored.getId();
 	}
 
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
-	public void delete(Long id) {
+	public boolean delete(Long id) {
     	Arrival obj = entityManager.find(Arrival.class, id);
+    	obj.setShip(null);
+    	obj.setContainers(null);
 		entityManager.remove(obj);
+		return true;
 	}
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation=Propagation.REQUIRED)
 	@Override
 	public Arrival findById(Long id) {
     	return entityManager.find(Arrival.class, id);
 	}
     
-    @Transactional(readOnly = true)
+    /**
+     * metodo de testing
+     */
+    @Transactional(readOnly = true, propagation=Propagation.REQUIRED)
 	@Override
 	public Arrival initializeAndUnproxy(Arrival obj) {
         if (obj == null) {
@@ -64,7 +75,7 @@ public class ArrivalDAO implements IArrivalDAO {
         return obj;
     }
 
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public List<Arrival> findAll() {
     	CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -75,11 +86,45 @@ public class ArrivalDAO implements IArrivalDAO {
         return allQuery.getResultList();
 	}
     
-    @Transactional
+    @Override
+    @Transactional(propagation=Propagation.REQUIRED)
     public List<Arrival> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
     	TypedQuery<Arrival> query = entityManager.createNamedQuery(namedQuery, Arrival.class);
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();
+    }
+
+    @Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public Long update(Arrival obj) {
+		Arrival stored = entityManager.merge(obj);
+    	return stored.getId();
+	}
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+	@Override
+	public List<Arrival> findArrivalUsingContainerForDate(Long containerId,
+			Date arrivalDate) {
+	
+    	TypedQuery<Arrival> query = entityManager.createNamedQuery(
+				"Arrival.findArrivalUsingContainerForDate", Arrival.class);
+		query.setParameter("id", containerId);
+		query.setParameter("arrivalDate", arrivalDate);	
+		
+		return query.getResultList();
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED)
+   	@Override
+   	public List<Arrival> findArrivalUsingContainerListForDate(List<Container> containerList,
+   			Date arrivalDate) {
+   	
+       	TypedQuery<Arrival> query = entityManager.createNamedQuery(
+   				"Arrival.findArrivalUsingContainerListForDate", Arrival.class);
+   		query.setParameter("containerList", containerList);
+   		query.setParameter("arrivalDate", arrivalDate);	
+   		
+   		return query.getResultList();
     }
 
 	@Override
@@ -96,5 +141,6 @@ public class ArrivalDAO implements IArrivalDAO {
 		params.put("shipId", Long.toString(shipId));
 		return executeNamedQuery("Arrival.arrivalsByMonthByShip", params);
 	}
-
+    
 }
+

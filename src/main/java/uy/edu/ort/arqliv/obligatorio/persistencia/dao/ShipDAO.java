@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import uy.edu.ort.arqliv.obligatorio.dominio.Ship;
@@ -28,14 +29,14 @@ public class ShipDAO implements IShipDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public Long store(Ship obj) {
     	Ship stored = entityManager.merge(obj);
     	return stored.getId();
 	}
 
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public boolean delete(Long id) {
     	
@@ -52,13 +53,13 @@ public class ShipDAO implements IShipDAO {
 	}
     
    
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, propagation=Propagation.REQUIRED)
 	@Override
 	public Ship findById(Long id) {
     	return entityManager.find(Ship.class, id);
 	}
 
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
 	@Override
 	public List<Ship> findAll() {
     	CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -70,7 +71,7 @@ public class ShipDAO implements IShipDAO {
 	}
     
     
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
  	@Override
  	public boolean canBeUpdated(Long id, Date arrivalDate) {
      	Query query = entityManager.createNamedQuery("Ship.canBeUpdated", Integer.class);
@@ -81,7 +82,7 @@ public class ShipDAO implements IShipDAO {
  	} 
   
     
-    @Transactional
+    @Transactional(propagation=Propagation.REQUIRED)
     public List<Ship> executeNamedQuery(String namedQuery, Map<String, String> parameters) {
     	TypedQuery<Ship> query = entityManager.createNamedQuery(namedQuery, Ship.class);
     	UtilsDAO.setParameters(query, parameters);
