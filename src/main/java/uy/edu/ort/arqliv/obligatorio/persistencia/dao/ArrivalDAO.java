@@ -1,5 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,5 +81,20 @@ public class ArrivalDAO implements IArrivalDAO {
     	UtilsDAO.setParameters(query, parameters);
     	return query.getResultList();
     }
+
+	@Override
+	public List<Arrival> arrivalsByMonth(int month) {
+		Map<String, String> params = new HashMap<String, String>(1);
+		params.put("month", Integer.toString(month));
+		return executeNamedQuery("Arrival.arrivalsByMonth", params);
+	}
+
+	@Override
+	public List<Arrival> arrivalsByMonthByShip(int month, Long shipId) {
+		Map<String, String> params = new HashMap<String, String>(2);
+		params.put("month", Integer.toString(month));
+		params.put("shipId", Long.toString(shipId));
+		return executeNamedQuery("Arrival.arrivalsByMonthByShip", params);
+	}
 
 }

@@ -19,4 +19,8 @@ public interface IArrivalDAO {
 	
 	public Arrival initializeAndUnproxy(Arrival obj);
 
+	public List<Arrival> arrivalsByMonth(int month);
+
+	public List<Arrival> arrivalsByMonthByShip(int month, Long shipId);
+
 }
