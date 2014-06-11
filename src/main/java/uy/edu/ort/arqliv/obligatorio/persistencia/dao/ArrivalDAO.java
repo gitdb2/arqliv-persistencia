@@ -140,6 +140,15 @@ public class ArrivalDAO implements IArrivalDAO {
 		params.put("shipId", shipId);
 		return executeNamedQuery("Arrival.arrivalsByMonthByShip", params);
 	}
+	
+	@Override
+	public List<Arrival> findArrivalByShipByDateByPort(long shipId, Date someDate, String somePort) {
+		TypedQuery<Arrival> query = entityManager.createNamedQuery("Arrival.findArrivalByShipByDateByPort", Arrival.class);
+   		query.setParameter("shipId", shipId);
+   		query.setParameter("someDate", someDate);	
+   		query.setParameter("somePort", somePort);
+   		return query.getResultList();
+	}
     
 }
 

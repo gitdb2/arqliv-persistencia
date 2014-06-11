@@ -23,12 +23,6 @@ public interface IArrivalDAO {
 
 	public Long update(Arrival arrival);
 
-	/**
-	 * TODO
-	 * @param containerId
-	 * @param arrivalDate
-	 * @return
-	 */
 	public List<Arrival> findArrivalUsingContainerForDate(Long containerId, Date arrivalDate);
 
 	public List<Arrival> findArrivalUsingContainerListForDate(List<Container> containers, Date arrivalDate);
@@ -36,5 +30,7 @@ public interface IArrivalDAO {
 	public List<Arrival> arrivalsByMonth(int month);
 
 	public List<Arrival> arrivalsByMonthByShip(int month, Long shipId);
+
+	public List<Arrival> findArrivalByShipByDateByPort(long shipId, Date someDate, String somePort);
 
 }
