@@ -1,5 +1,6 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 
 @Repository("departureDAO")
@@ -74,6 +76,14 @@ public class DepartureDAO implements IDepartureDAO {
 	public Long update(Departure obj) {
 		Departure stored = entityManager.merge(obj);
     	return stored.getId();
+	}
+
+	@Override
+	public List<Departure> findDepartureUsingContainerListForDate(List<Container> containerList, Date departureDate) {
+		TypedQuery<Departure> query = entityManager.createNamedQuery("Departure.findDepartureUsingContainerListForDate", Departure.class);
+   		query.setParameter("containerList", containerList);
+   		query.setParameter("departureDate", departureDate);	
+   		return query.getResultList();
 	}
     
 }

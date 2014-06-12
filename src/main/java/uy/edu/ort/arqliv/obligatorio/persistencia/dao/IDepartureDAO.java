@@ -1,8 +1,10 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import uy.edu.ort.arqliv.obligatorio.dominio.Container;
 import uy.edu.ort.arqliv.obligatorio.dominio.Departure;
 
 public interface IDepartureDAO {
@@ -18,5 +20,7 @@ public interface IDepartureDAO {
 	public List<Departure> executeNamedQuery(String namedQuery, Map<String, Object> parameters);
 	
 	public Long update(Departure departure);
+
+	public List<Departure> findDepartureUsingContainerListForDate(List<Container> containersToCheck, Date departureDate);
 
 }
