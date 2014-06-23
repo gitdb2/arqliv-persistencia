@@ -40,10 +40,17 @@ public class ShipDAO implements IShipDAO {
 	@Override
 	public boolean delete(Long id) {
     	
-    	Query query = entityManager.createNamedQuery("Ship.countUsage", Long.class);
+    	Query query = entityManager.createNamedQuery("Ship.countUsageByArrival", Long.class);
     	query.setParameter("id", id);
     	
-    	Long countInUse = (Long) query.getSingleResult();
+    	Long countInUse = (Long) query.getSingleResult();   
+    	
+    	
+    	query = entityManager.createNamedQuery("Ship.countUsageByDepearture", Integer.class);
+     	query.setParameter("id", id);
+     	countInUse +=  (Integer) query.getSingleResult();
+    	
+    	
     	if(countInUse != null && countInUse == 0){
     		Ship obj = entityManager.find(Ship.class, id);
     		entityManager.remove(obj);
@@ -81,6 +88,16 @@ public class ShipDAO implements IShipDAO {
      	return val == 1;
  	} 
   
+    @Transactional(propagation=Propagation.REQUIRED)
+  	@Override
+  	public boolean shipInUseInDeparture(Long id) {
+      	Query query = entityManager.createNamedQuery("Ship.countUsageByDepearture", Integer.class);
+     	query.setParameter("id", id);
+      	Integer val =  (Integer) query.getSingleResult();
+      	return val >0;
+  	} 
+      
+    
     
     @Transactional(propagation=Propagation.REQUIRED)
     public List<Ship> executeNamedQuery(String namedQuery, Map<String, Object> parameters) {

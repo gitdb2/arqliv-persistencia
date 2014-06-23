@@ -31,7 +31,17 @@ public interface IShipDAO {
 	 * @return
 	 */
 	boolean canBeUpdated(Long id, Date arrivalDate);
+//	
+//	
+//	boolean canBeUpdatedByDeparture(Long id, Date departureDate);
+//	
 	
+	/**
+	 * Indica si el barco esta en uso en algun departure
+	 * @param id
+	 * @return
+	 */
+	boolean shipInUseInDeparture(Long id);
 	
 
 }
