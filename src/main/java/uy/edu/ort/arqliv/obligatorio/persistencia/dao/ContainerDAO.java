@@ -45,11 +45,21 @@ public class ContainerDAO implements IContainerDAO {
 														// no este en uso
 
 			Query query = entityManager.createNamedQuery(
-					"Container.countUsage", Long.class);
+					"Container.countUsageForArrival", Long.class);
 			query.setParameter("id", obj.getId());
 
 			long countInUse = (Long) query.getSingleResult();
-			if (countInUse != 0) {
+			
+			
+			//esto puede evitarse si se logra controlar que todo container departed esta si o si como arrived
+//			query = entityManager.createNamedQuery(//tampoco puede estar usado en un departure
+//					"Container.countUsageForDepartures", Long.class);
+//			query.setParameter("id", obj.getId());
+//
+//			countInUse += (Long) query.getSingleResult();
+//			
+			
+			if (countInUse > 0) {
 				return null;
 			}
 		}
@@ -62,7 +72,7 @@ public class ContainerDAO implements IContainerDAO {
 	@Override
 	public boolean delete(Long id) {
 
-		Query query = entityManager.createNamedQuery("Container.countUsage",
+		Query query = entityManager.createNamedQuery("Container.countUsageForArrival",
 				Long.class);
 		query.setParameter("id", id);
 
@@ -104,16 +114,29 @@ public class ContainerDAO implements IContainerDAO {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
-	public boolean isContainerInUse(Long id, Date arrivalDate) {
+	public boolean isContainerInUseForArrival(Long id, Date arrivalDate) {
 
 		Query query = entityManager.createNamedQuery(
-				"Container.countUsageOnDate", Long.class);
+				"Container.countUsageOnDateForArrival", Long.class);
 		query.setParameter("id", id);
 		query.setParameter("arrivalDate", arrivalDate);
 
 		Long countInUse = (Long) query.getSingleResult();
 		return countInUse != 0;
 
+	}
+
+	@Override
+	public boolean isContainerInUseForDeparture(Long id, Date arrivalDate) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isContaineriUseForShip(Long id, Long shipId, Date arrivalDate,
+			EnumDepartureOrArrival departureOrArrival) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

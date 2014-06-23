@@ -33,6 +33,24 @@ public interface IContainerDAO {
 	 * @param arrivalDate
 	 * @return
 	 */
-	boolean isContainerInUse(Long id, Date arrivalDate);
+	boolean isContainerInUseForArrival(Long id, Date arrivalDate);
+	
+	/**
+	 * retorna true en caso que el contenedor este usado en otra Partida en la misma fecha
+	 * @param id
+	 * @param arrivalDate
+	 * @return
+	 */
+	boolean isContainerInUseForDeparture(Long id, Date arrivalDate);
+	
+	/**
+	 * retorna si un contenedor esta asociado a un barco en una fecha , para arribos, partidas o ambos
+	 * @param id
+	 * @param shipId
+	 * @param arrivalDate
+	 * @param departureOrArrival indica si se va a achequear para llegadas, partidas o ambas
+	 * @return
+	 */
+	boolean isContaineriUseForShip(Long id, Long shipId, Date arrivalDate, EnumDepartureOrArrival departureOrArrival);
 
 }
