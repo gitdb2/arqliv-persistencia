@@ -53,4 +53,6 @@ public interface IContainerDAO {
 	 */
 	boolean isContaineriUseForShip(Long id, Long shipId, Date arrivalDate, EnumDepartureOrArrival departureOrArrival);
 
+	
+
 }

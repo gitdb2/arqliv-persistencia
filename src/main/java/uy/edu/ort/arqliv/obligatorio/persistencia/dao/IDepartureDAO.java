@@ -28,5 +28,13 @@ public interface IDepartureDAO {
 	public List<Departure> departuresByMonthByShip(int month, Long shipId);
 
 	public boolean isArrivalDeparted(Long arrivalId);
+	
+	/**
+	 * Indica si el contenedor con id esta en algun arrivo que no haya partido aún
+	 * @param id
+	 * @param departureDate
+	 * @return
+	 */
+	public boolean isContainerAvailableForDeparture(Long id, Date departureDate);
 
 }
