@@ -23,4 +23,8 @@ public interface IDepartureDAO {
 
 	public List<Departure> findDepartureUsingContainerListForDate(List<Container> containersToCheck, Date departureDate);
 
+	public List<Departure> departuresByMonth(int month);
+	
+	public List<Departure> departuresByMonthByShip(int month, Long shipId);
+
 }

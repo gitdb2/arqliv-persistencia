@@ -1,6 +1,7 @@
 package uy.edu.ort.arqliv.obligatorio.persistencia.dao;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,6 +85,22 @@ public class DepartureDAO implements IDepartureDAO {
    		query.setParameter("containerList", containerList);
    		query.setParameter("departureDate", departureDate);	
    		return query.getResultList();
+	}
+
+	@Override
+	public List<Departure> departuresByMonth(int month) {
+		Map<String, Object> params = new HashMap<String, Object>(1);
+		params.put("month", month);
+		List<Departure> ret = executeNamedQuery("Departure.departuresByMonth", params); 
+		return ret;
+	}
+
+	@Override
+	public List<Departure> departuresByMonthByShip(int month, Long shipId) {
+		Map<String, Object> params = new HashMap<String, Object>(2);
+		params.put("month", month);
+		params.put("shipId", shipId);
+		return executeNamedQuery("Departure.departuresByMonthByShip", params);
 	}
     
 }
