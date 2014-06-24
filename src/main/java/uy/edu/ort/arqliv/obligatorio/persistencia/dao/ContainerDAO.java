@@ -43,23 +43,7 @@ public class ContainerDAO implements IContainerDAO {
 		if (stored.getCapacity() != obj.getCapacity()) {// si cambia la
 														// capacidad chequeo que
 														// no este en uso
-
-			Query query = entityManager.createNamedQuery(
-					"Container.countUsageForArrival", Long.class);
-			query.setParameter("id", obj.getId());
-
-			long countInUse = (Long) query.getSingleResult();
-			
-			
-			//esto puede evitarse si se logra controlar que todo container departed esta si o si como arrived
-//			query = entityManager.createNamedQuery(//tampoco puede estar usado en un departure
-//					"Container.countUsageForDepartures", Long.class);
-//			query.setParameter("id", obj.getId());
-//
-//			countInUse += (Long) query.getSingleResult();
-//			
-			
-			if (countInUse > 0) {
+			if (countContainerUsage(obj.getId()) > 0) {
 				return null;
 			}
 		}
@@ -68,15 +52,34 @@ public class ContainerDAO implements IContainerDAO {
 		return stored.getId();
 	}
 
+	/**
+	 * cuenta la cantidad de usos para un contenedor ya sea arrival como departure
+	 * @param obj
+	 * @return
+	 */
+	private long countContainerUsage(Long containerId) {
+		long countInUse;
+		Query query = entityManager.createNamedQuery(
+				"Container.countUsageForArrival", Long.class);
+		query.setParameter("id", containerId);
+
+		countInUse = (Long) query.getSingleResult();
+		
+		
+		//esto puede evitarse si se logra controlar que todo container departed esta si o si como arrived
+		query = entityManager.createNamedQuery(//tampoco puede estar usado en un departure
+				"Container.countUsageForDepartures", Long.class);
+		query.setParameter("id", containerId);
+
+		countInUse += (Long) query.getSingleResult();
+		return countInUse;
+	}
+
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Override
 	public boolean delete(Long id) {
 
-		Query query = entityManager.createNamedQuery("Container.countUsageForArrival",
-				Long.class);
-		query.setParameter("id", id);
-
-		Long countInUse = (Long) query.getSingleResult();
+		Long countInUse = countContainerUsage(id);
 		if (countInUse != null && countInUse == 0) {
 			Container obj = entityManager.find(Container.class, id);
 			entityManager.remove(obj);
@@ -127,15 +130,18 @@ public class ContainerDAO implements IContainerDAO {
 	}
 
 	@Override
-	public boolean isContainerInUseForDeparture(Long id, Date arrivalDate) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isContainerInUseForDeparture(Long id, Date departureDate) {
+		Query query = entityManager.createNamedQuery(
+				"Container.countUsageOnDateForDepartures", Long.class);
+		query.setParameter("id", id);
+		query.setParameter("departureDate", departureDate);
+
+		Long countInUse = (Long) query.getSingleResult();
+		return countInUse != 0;
 	}
 
 	@Override
-	public boolean isContaineriUseForShip(Long id, Long shipId, Date arrivalDate,
-			EnumDepartureOrArrival departureOrArrival) {
-		// TODO Auto-generated method stub
+	public boolean isContaineriUseForShip(Long id, Long shipId, Date date, EnumDepartureOrArrival departureOrArrival) {
 		return false;
 	}
 

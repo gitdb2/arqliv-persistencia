@@ -40,16 +40,7 @@ public class ShipDAO implements IShipDAO {
 	@Override
 	public boolean delete(Long id) {
     	
-    	Query query = entityManager.createNamedQuery("Ship.countUsageByArrival", Long.class);
-    	query.setParameter("id", id);
-    	
-    	Long countInUse = (Long) query.getSingleResult();   
-    	
-    	
-    	query = entityManager.createNamedQuery("Ship.countUsageByDepearture", Integer.class);
-     	query.setParameter("id", id);
-     	countInUse +=  (Integer) query.getSingleResult();
-    	
+    	Long countInUse = countShipUsage(id);
     	
     	if(countInUse != null && countInUse == 0){
     		Ship obj = entityManager.find(Ship.class, id);
@@ -57,6 +48,25 @@ public class ShipDAO implements IShipDAO {
     		return true;
     	}
     	return false;	
+	}
+
+    /**
+     * retoran la cantidad de arribos y departures en los que participa
+     * @param id
+     * @return
+     */
+	private Long countShipUsage(Long id) {
+		Long countInUse;
+		Query query = entityManager.createNamedQuery("Ship.countUsageByArrival", Long.class);
+    	query.setParameter("id", id);
+    	countInUse = (Long) query.getSingleResult();   
+
+    	
+    	
+    	query = entityManager.createNamedQuery("Ship.countUsageByDepearture", Integer.class);
+     	query.setParameter("id", id);
+     	countInUse +=  (Integer) query.getSingleResult();
+		return countInUse;
 	}
     
    
