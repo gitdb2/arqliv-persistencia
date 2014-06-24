@@ -27,4 +27,6 @@ public interface IDepartureDAO {
 	
 	public List<Departure> departuresByMonthByShip(int month, Long shipId);
 
+	public boolean isArrivalDeparted(Long arrivalId);
+
 }

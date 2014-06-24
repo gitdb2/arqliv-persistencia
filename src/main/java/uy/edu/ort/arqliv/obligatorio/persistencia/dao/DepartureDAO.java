@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -101,6 +102,16 @@ public class DepartureDAO implements IDepartureDAO {
 		params.put("month", month);
 		params.put("shipId", shipId);
 		return executeNamedQuery("Departure.departuresByMonthByShip", params);
+	}
+
+	@Override
+	public boolean isArrivalDeparted(Long arrivalId) {
+		Query query = entityManager.createNamedQuery(
+				"Departure.isArrivalDeparted", Long.class);
+		query.setParameter("id", arrivalId);
+
+		Long countInUse = (Long) query.getSingleResult();
+		return countInUse > 0;
 	}
     
 }
