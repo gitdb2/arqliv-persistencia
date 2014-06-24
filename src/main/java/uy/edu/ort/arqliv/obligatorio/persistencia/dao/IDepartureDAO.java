@@ -31,6 +31,8 @@ public interface IDepartureDAO {
 	
 	public boolean isArrivalDepartedDifferentDeparture(Long arrivalId, Long departureId);
 	
+	public boolean isContainerAvailableForDepartureDifferentDeparture(Long containerId, Date departureDate, Long departureId);
+	
 	/**
 	 * Indica si el contenedor con id esta en algun arrivo que no haya partido aún
 	 * @param id

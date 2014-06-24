@@ -129,5 +129,16 @@ public class DepartureDAO implements IDepartureDAO {
 		Long countInUse = (Long) query.getSingleResult();
 		return countInUse > 0;
 	}
+	
+	@Override
+	public boolean isContainerAvailableForDepartureDifferentDeparture(Long containerId, Date departureDate, Long departureId) {
+		Query query = entityManager.createNamedQuery("Departure.isContainerAvailableForDepartureDifferentDeparture", Long.class);
+		query.setParameter("id", containerId);
+		query.setParameter("departureDate", departureDate);
+		query.setParameter("departureId", departureId);
+		Long countInUse = (Long) query.getSingleResult();
+		return countInUse > 0;
+	}
+	
 }
 
