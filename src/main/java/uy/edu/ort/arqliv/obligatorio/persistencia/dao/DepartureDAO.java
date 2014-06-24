@@ -106,20 +106,24 @@ public class DepartureDAO implements IDepartureDAO {
 
 	@Override
 	public boolean isArrivalDeparted(Long arrivalId) {
-		Query query = entityManager.createNamedQuery(
-				"Departure.isArrivalDeparted", Long.class);
+		Query query = entityManager.createNamedQuery("Departure.isArrivalDeparted", Long.class);
 		query.setParameter("id", arrivalId);
-
 		Long countInUse = (Long) query.getSingleResult();
 		return countInUse > 0;
 	}
-    
+	
+	@Override
+	public boolean isArrivalDepartedDifferentDeparture(Long arrivalId, Long departureId) {
+		Query query = entityManager.createNamedQuery("Departure.isArrivalDepartedDifferentDeparture", Long.class);
+		query.setParameter("id", arrivalId);
+		query.setParameter("departureId", departureId);
+		Long countInUse = (Long) query.getSingleResult();
+		return countInUse > 0;
+	}
 	
 	@Override
 	public boolean isContainerAvailableForDeparture(Long containerId, Date departureDate) {
-		
-		Query query = entityManager.createNamedQuery(
-				"Departure.isContainerAvailableForDeparture", Long.class);
+		Query query = entityManager.createNamedQuery("Departure.isContainerAvailableForDeparture", Long.class);
 		query.setParameter("id", containerId);
 		query.setParameter("departureDate", departureDate);
 		Long countInUse = (Long) query.getSingleResult();
